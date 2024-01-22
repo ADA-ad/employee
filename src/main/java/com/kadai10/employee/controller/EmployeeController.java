@@ -1,6 +1,7 @@
 package com.kadai10.employee.controller;
 
 import com.kadai10.employee.entity.Employee;
+import com.kadai10.employee.exception.UserNotFoundException;
 import com.kadai10.employee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
