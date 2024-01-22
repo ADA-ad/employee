@@ -4,16 +4,17 @@ import com.kadai10.employee.entity.Employee;
 import com.kadai10.employee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * ユーザー関連のHTTPリクエストに対するハンドラーを提供するコントローラークラスです。 ユーザー情報の取得、登録、更新、削除などの操作を処理します。
  * エンドポイントを提供し、外部からのユーザー関連の操作を可能にします。
  */
-@Controller
+
+@RestController
 public class EmployeeController {
     /**
      * EmployeeServiceのインスタンスを格納するためのフィールド.。このサービスはユーザー関連の機能を提供します。
@@ -25,11 +26,49 @@ public class EmployeeController {
      */
 
     public  EmployeeController(EmployeeService employeeService) {
-        this.employeeService =employeeService;
+        this.employeeService = employeeService;
     }
-    @RequestMapping
+
+    /**
+     * 全てのユーザー情報を取得するメソッド.
+     *
+     * @return 全てのユーザー情報のリスト
+     */
     @GetMapping("/employees")
     public List<Employee> findAll(){
         return employeeService.findAll();
     }
+
+
+    /**
+     * nameによるユーザー情報を取得するメソッド.
+     * @param name ユーザーidのインスタンス.
+     * @return nameによるユーザー情報の取得
+     */
+    @GetMapping("/employees/names")
+    public List<Employee> findByName(@RequestParam String name) { return  employeeService.findByName(name);}
+
+    /**
+     * idによるユーザー情報を取得するメソッド.
+     * @param id ユーザーidのインスタンス.
+     * @return idによるユーザー情報の取得
+     */
+    @GetMapping("/employees/{id}")
+    public Optional<Employee> findById(@PathVariable("id") Integer id){ return employeeService.findById(id);}
+
+    /**
+     * ageによるユーザー情報を取得するメソッド.
+     * @param age ユーザーidのインスタンス.
+     * @return ageによるユーザー情報の取得
+     */
+    @GetMapping("/employees/ages")
+    public List<Employee> findByAge(@RequestParam Integer age){ return employeeService.findByAge(age);}
+
+    /**
+     * addressによるユーザー情報を取得するメソッド.
+     * @param address ユーザーidのインスタンス.
+     * @return addressによるユーザー情報の取得
+     */
+    @GetMapping("/employees/address")
+    public List<Employee> findByAddress(@RequestParam String address){ return employeeService.findByAddress(address);}
 }
