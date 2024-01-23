@@ -1,6 +1,7 @@
 package com.kadai10.employee.controller;
 
 import com.kadai10.employee.entity.Employee;
+import com.kadai10.employee.exception.UserNotFoundException;
 import com.kadai10.employee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,7 +55,7 @@ public class EmployeeController {
      * @return idによるユーザー情報の取得
      */
     @GetMapping("/employees/{id}")
-    public Optional<Employee> findById(@PathVariable("id") Integer id){ return employeeService.findById(id);}
+    public Employee findById(@PathVariable("id") Integer id){ return employeeService.findById(id);}
 
     /**
      * ageによるユーザー情報を取得するメソッド.

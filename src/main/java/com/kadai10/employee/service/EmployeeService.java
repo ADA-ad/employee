@@ -1,6 +1,7 @@
 package com.kadai10.employee.service;
 
 import com.kadai10.employee.entity.Employee;
+import com.kadai10.employee.exception.UserNotFoundException;
 import com.kadai10.employee.mapper.EmployeeMapper;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -45,7 +46,9 @@ public class EmployeeService {
      * @param id 取得したいユーザーのid
      * @return 指定されたIDに対応するユーザー情報。存在しない場合は空のOptionalを返す
      */
-    public Optional<Employee> findById(Integer id){ return employeeMapper.findById(id);}
+    public Employee findById(Integer id){
+        return employeeMapper.findById(id).orElseThrow(() -> new UserNotFoundException("userId " + id +" could not be found"));
+    }
 
     /**
      * 指定された年齢に対応するユーザーを取得するメソッド。
