@@ -1,12 +1,19 @@
 package com.kadai10.employee.controller;
 
+import com.kadai10.employee.controller.request.EmployeeCreateRequest;
+import com.kadai10.employee.controller.response.EmployeeCreateResponse;
 import com.kadai10.employee.entity.Employee;
 import com.kadai10.employee.exception.UserNotFoundException;
 import com.kadai10.employee.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,7 +62,7 @@ public class EmployeeController {
      * @return idによるユーザー情報の取得
      */
     @GetMapping("/employees/{id}")
-    public Optional<Employee> findById(@PathVariable("id") Integer id){ return employeeService.findById(id);}
+    public Employee findById(@PathVariable("id") Integer id){ return employeeService.findById(id);}
 
     /**
      * ageによるユーザー情報を取得するメソッド.
@@ -72,4 +79,22 @@ public class EmployeeController {
      */
     @GetMapping("/employees/address")
     public List<Employee> findByAddress(@RequestParam String address){ return employeeService.findByAddress(address);}
+
+    /**
+     * 新しいユーザーを登録するメソッド.
+     *
+     * @param employeeCreateRequest ユーザー登録に使用されるリクエストオブジェクト
+     * @param uriBuilder  レスポンスヘッダーに含まれるLocation URI を構築するための UriComponentsBuilder
+     */
+    @PostMapping("/employees")
+    public ResponseEntity<EmployeeCreateResponse> insert(final @RequestBody @Validated EmployeeCreateRequest employeeCreateRequest,
+                                                         final UriComponentsBuilder uriBuilder) {
+        Employee employee = employeeService.insert(employeeCreateRequest.getName(), employeeCreateRequest.getAge(),
+                employeeCreateRequest.getAddress());
+        URI location = uriBuilder.path("/employees/{id}").buildAndExpand(employee.getId()).toUri();
+        EmployeeCreateResponse body = new EmployeeCreateResponse( employee.getName(), employee.getAge(),
+                employee.getAddress() + "を登録しました");
+        return ResponseEntity.created(location).body(body);
+
+    }
 }

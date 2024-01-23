@@ -46,8 +46,8 @@ public class EmployeeService {
      * @param id 取得したいユーザーのid
      * @return 指定されたIDに対応するユーザー情報。存在しない場合は空のOptionalを返す
      */
-    public Optional<Employee> findById(Integer id){
-        return Optional.ofNullable(employeeMapper.findById(id).orElseThrow(() -> new UserNotFoundException("userId " + id +" could not be found")));
+    public Employee findById(Integer id){
+        return employeeMapper.findById(id);
     }
 
     /**
@@ -64,4 +64,19 @@ public class EmployeeService {
      */
 
     public List<Employee> findByAddress(String address){ return employeeMapper.findByAddress(address);}
+
+    /**
+     * 新しいユーザーを登録するメソッド.
+     *
+     * @param name       登録するユーザーの名前
+     * @param age 登録するユーザーの年齢
+     * @param address 登録するユーザーの住所
+     * @return 登録されたユーザー情報
+     */
+
+    public Employee insert(String name, Integer age, String address) {
+        Employee employee = Employee.createEmployee(name, age, address);
+        employeeMapper.insert(employee);
+        return employee;
+    }
 }

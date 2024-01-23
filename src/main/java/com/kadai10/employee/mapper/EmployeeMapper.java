@@ -1,7 +1,9 @@
 package com.kadai10.employee.mapper;
 
 import com.kadai10.employee.entity.Employee;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -33,7 +35,7 @@ public interface EmployeeMapper {
      * @return 指定されたIDに対応するユーザーを返す。存在しない場合は空のOptionalを返す
      */
     @Select("SELECT * FROM employees WHERE id = #{id}")
-    Optional<Employee> findById(Integer id);
+    Employee findById(Integer id);
 
     /**
      * 指定された年齢に対応するユーザーを取得する。
@@ -50,4 +52,14 @@ public interface EmployeeMapper {
      */
     @Select("SELECT * FROM employees WHERE address LIKE CONCAT('%', #{address}, '%')")
     List<Employee> findByAddress(String address);
+
+    /**
+     * ユーザーをデータベースに登録.
+     *
+     * @param employee 登録するユーザーオブジェクト
+     */
+    @Insert("INSERT INTO employees (name, age, address) VALUES (#{name}, #{age}, #{address})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    void insert(Employee employee);
+
 }
