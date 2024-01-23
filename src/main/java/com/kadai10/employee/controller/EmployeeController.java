@@ -89,8 +89,8 @@ public class EmployeeController {
     @PostMapping("/employees")
     public ResponseEntity<EmployeeCreateResponse> insert(final @RequestBody @Validated EmployeeCreateRequest employeeCreateRequest,
                                                          final UriComponentsBuilder uriBuilder) {
-        Employee employee = employeeService.insert(employeeCreateRequest.getName(), employeeCreateRequest.getAge(),
-                employeeCreateRequest.getAddress());
+        Employee employee = employeeService.insert(employeeCreateRequest.name(), employeeCreateRequest.age(),
+                employeeCreateRequest.address());
         URI location = uriBuilder.path("/employees/{id}").buildAndExpand(employee.getId()).toUri();
         EmployeeCreateResponse body = new EmployeeCreateResponse( employee.getName(), employee.getAge(),
                 employee.getAddress() + "を登録しました");
