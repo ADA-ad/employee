@@ -46,8 +46,8 @@ public class EmployeeService {
      * @param id 取得したいユーザーのid
      * @return 指定されたIDに対応するユーザー情報。存在しない場合は空のOptionalを返す
      */
-    public Optional<Employee> findById(Integer id){
-        return Optional.ofNullable(employeeMapper.findById(id).orElseThrow(() -> new UserNotFoundException("userId " + id +" could not be found")));
+    public Employee findById(Integer id){
+        return employeeMapper.findById(id).orElseThrow(() -> new UserNotFoundException("userId " + id +" could not be found"));
     }
 
     /**
