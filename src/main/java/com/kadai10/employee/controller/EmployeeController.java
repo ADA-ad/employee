@@ -78,7 +78,7 @@ public class EmployeeController {
      * @return addressによるユーザー情報の取得
      */
     @GetMapping("/employees/address")
-    public List<Employee> findByAddress(@RequestParam String address){ return employeeService.findByAddress(address);}
+    public Optional<Employee> findByAddress(@RequestParam String address){ return employeeService.findByAddress(address);}
 
     /**
      * 新しいユーザーを登録するメソッド.
@@ -92,7 +92,7 @@ public class EmployeeController {
         Employee employee = employeeService.insert(employeeCreateRequest.name(), employeeCreateRequest.age(),
                 employeeCreateRequest.address());
         URI location = uriBuilder.path("/employees/{id}").buildAndExpand(employee.getId()).toUri();
-        EmployeeCreateResponse body = new EmployeeCreateResponse( employee.getName(), employee.getAge(),
+        EmployeeCreateResponse body = new EmployeeCreateResponse(employee.getName(), employee.getAge(),
                 employee.getAddress() + "を登録しました");
         return ResponseEntity.created(location).body(body);
 

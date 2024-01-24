@@ -1,5 +1,6 @@
 package com.kadai10.employee.controller;
 
+import com.kadai10.employee.exception.UserAlreadyExistsException;
 import com.kadai10.employee.exception.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +26,6 @@ import java.util.Map;
 public class UserControllerAdvice {
     /**
      * ユーザーが見つからない場合の例外ハンドリングメソッド.
-     *
      * @param e       ユーザーが見つからない例外
      * @param request HTTPリクエスト
      * @return エラーレスポンス
@@ -41,15 +42,40 @@ public class UserControllerAdvice {
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * 入力が不足している場合の例外ハンドリングメソッド.
+     * @param e       入力が不足している例外
+     * @param request HTTPリクエスト
+     * @return エラーレスポンス
+     */
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        List<Map<String, String>> errors = new ArrayList<>();
-        e.getBindingResult().getFieldErrors().forEach(fieldError -> {
-            Map<String, String> error = new HashMap<>();
-            error.put("field", fieldError.getField());
-            error.put("message", fieldError.getDefaultMessage());
-            errors.add(error);
-        });
-        return new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(
+            final MethodArgumentNotValidException e, final HttpServletRequest request) {
+        Map<String, String> body = Map.of(
+                "timestamp", ZonedDateTime.now().toString(),
+                "status", String.valueOf(HttpStatus.BAD_REQUEST.value()),
+                "error", HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                "message", e.getMessage(),
+                "path", request.getRequestURI());
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * 重複したユーザーが見つかった場合の例外ハンドリングメソッド.
+     * @param e       重複した職業が見つかった例外
+     * @param request HTTPリクエスト
+     * @return エラーレスポンス
+     */
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<Map<String, String>> handleUserAlreadyExistsException(
+            final UserAlreadyExistsException e, final HttpServletRequest request) {
+        Map<String, String> body = Map.of(
+                "timestamp", ZonedDateTime.now().toString(),
+                "status", String.valueOf(HttpStatus.CONFLICT.value()),
+                "error", HttpStatus.CONFLICT.getReasonPhrase(),
+                "message", e.getMessage(),
+                "path", request.getRequestURI());
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 }

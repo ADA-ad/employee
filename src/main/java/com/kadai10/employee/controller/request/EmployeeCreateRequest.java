@@ -7,11 +7,20 @@ import lombok.EqualsAndHashCode;
 
 /**
  * ユーザー情報のリクエストを表すクラスです. このクラスは新しいユーザーの作成の要求を受け取ります。
- *
- *
+ * @param name  ユーザーの名前を表すフィールド。
+ * @param age  ユーザーの年齢を表すフィールド
+ * @param address  ユーザーの住所を表すフィールド
  */
 
 public record EmployeeCreateRequest (
+        /**
+         * EmployeeCreateRequest オブジェクトを生成するためのコンストラクタ.
+         *
+         * @param name ユーザーの名前
+         * @param age ユーザーの年齢
+         * @param address ユーザーの住所
+         *
+         */
         @NotBlank (message = "名前を入力してください")
         @Size(max = 8)
         String name,

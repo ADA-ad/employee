@@ -35,7 +35,7 @@ public interface EmployeeMapper {
      * @return 指定されたIDに対応するユーザーを返す。存在しない場合は空のOptionalを返す
      */
     @Select("SELECT * FROM employees WHERE id = #{id}")
-    Employee findById(Integer id);
+    Optional<Employee> findById(Integer id);
 
     /**
      * 指定された年齢に対応するユーザーを取得する。
@@ -51,11 +51,10 @@ public interface EmployeeMapper {
      * @return 指定された住所に対応するユーザーを返す
      */
     @Select("SELECT * FROM employees WHERE address LIKE CONCAT('%', #{address}, '%')")
-    List<Employee> findByAddress(String address);
+    Optional<Employee> findByAddress(String address);
 
     /**
      * ユーザーをデータベースに登録.
-     *
      * @param employee 登録するユーザーオブジェクト
      */
     @Insert("INSERT INTO employees (name, age, address) VALUES (#{name}, #{age}, #{address})")
