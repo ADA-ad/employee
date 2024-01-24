@@ -1,6 +1,8 @@
 package com.kadai10.employee.service;
 
+import com.kadai10.employee.controller.request.EmployeeUpdateRequest;
 import com.kadai10.employee.entity.Employee;
+import com.kadai10.employee.exception.EmployeeAlreadyExistsException;
 import com.kadai10.employee.exception.UserNotFoundException;
 import com.kadai10.employee.mapper.EmployeeMapper;
 import org.springframework.stereotype.Service;
@@ -46,7 +48,7 @@ public class EmployeeService {
      * @param id 取得したいユーザーのid
      * @return 指定されたIDに対応するユーザー情報。存在しない場合は空のOptionalを返す
      */
-    public Employee findById(Integer id){
+    public Optional<Employee> findById(Integer id){
         return employeeMapper.findById(id);
     }
 
@@ -79,4 +81,34 @@ public class EmployeeService {
         employeeMapper.insert(employee);
         return employee;
     }
+
+    /**
+     * ユーザー情報を更新するメソッド.
+     *
+     * @param id 更新するユーザーのID
+     * @return 更新されたユーザー情報
+     * @throws UserNotFoundException            指定されたIDのユーザーが見つからない場合
+     *
+     */
+    public Employee updateEmployee(final Integer id, EmployeeUpdateRequest employeeUpdateRequest) {
+        try {
+            Employee employee = employeeMapper.findById(id)
+                    .orElseThrow(() -> new UserNotFoundException("userID:" + id + "not fond"));
+            if (employeeUpdateRequest.getName() != null) {
+                employee.setName(employeeUpdateRequest.getName());
+            }
+            if (employeeUpdateRequest.getAge() != null) {
+                employee.setAge(employeeUpdateRequest.getAge());
+            }
+            if (employeeUpdateRequest.getAddress() != null) {
+                employee.setAddress(employee.getAddress());
+            }
+            employeeMapper.updateEmployee(employee);
+            return employee;
+        } catch (EmployeeAlreadyExistsException e) {
+            throw new EmployeeAlreadyExistsException("ユーザーが重複している");
+        }
+
+    }
+
 }

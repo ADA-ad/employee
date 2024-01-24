@@ -7,7 +7,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class EmployeeCreateResponse {
+public class EmployeeResponse {
 
     private String name;
     private Integer age;

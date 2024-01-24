@@ -10,12 +10,12 @@ import lombok.EqualsAndHashCode;
 
 /**
  * ユーザー情報のリクエストを表すクラスです. このクラスは新しいユーザーの作成の要求を受け取ります。
- *
- *
  */
 @Data
 @AllArgsConstructor
 public class EmployeeCreateRequest  {
+
+
 
         @NotBlank (message = "名前を入力してください")
         @Size(max = 8)
