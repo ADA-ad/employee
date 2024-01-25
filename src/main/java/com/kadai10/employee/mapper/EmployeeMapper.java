@@ -61,4 +61,14 @@ public interface EmployeeMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(Employee employee);
 
+    /**
+     * 指定された名前と住所に対応するユーザーを取得し、重複チェック確認用
+     * @param name 登録するユーザーオブジェクト
+     * @param address 登録するユーザーオブジェクト
+     *
+     */
+    @Select("SELECT * FROM employees WHERE name = #{name} AND address = #{address}")
+    Optional<Employee> findByNameAndAddress(String name, String address);
+
+
 }

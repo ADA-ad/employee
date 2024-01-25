@@ -74,15 +74,17 @@ public class EmployeeService {
      * @param age 登録するユーザーの年齢
      * @param address 登録するユーザーの住所
      * @return 登録されたユーザー情報
+     * @throws UserAlreadyExistsException 名前と住所完全一致、ユーザーが重複する場合
      */
 
     public Employee insert(String name, Integer age, String address) {
         Employee employee = Employee.createEmployee(name, age, address);
 
-        if (employeeMapper.findByAddress(address).isPresent()) {
-            throw new UserAlreadyExistsException("重複不可");
+        if (employeeMapper.findByNameAndAddress(name,address).isPresent()) {
+            throw new UserAlreadyExistsException("ユーザーは重複不可。");
         }
         employeeMapper.insert(employee);
         return employee;
     }
+
 }

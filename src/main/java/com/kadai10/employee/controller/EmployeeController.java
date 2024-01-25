@@ -93,7 +93,7 @@ public class EmployeeController {
                 employeeCreateRequest.address());
         URI location = uriBuilder.path("/employees/{id}").buildAndExpand(employee.getId()).toUri();
         EmployeeCreateResponse body = new EmployeeCreateResponse(employee.getName(), employee.getAge(),
-                employee.getAddress() + "を登録しました");
+                employee.getAddress() + " を登録しました");
         return ResponseEntity.created(location).body(body);
 
     }
