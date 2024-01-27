@@ -1,9 +1,6 @@
 package com.kadai10.employee.controller.request;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +17,7 @@ public class EmployeeCreateRequest  {
         @NotBlank (message = "名前を入力してください")
         @Size(max = 8)
         private String name;
-        @NotBlank(message = "年齢を入力してください")
+        @NotNull(message = "年齢を入力してください")
         @Min(0)
         @Max(200)
         private Integer age;
