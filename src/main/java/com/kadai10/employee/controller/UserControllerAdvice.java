@@ -43,7 +43,6 @@ public class UserControllerAdvice {
      * @param request HTTPリクエスト
      * @return エラーレスポンス
      */
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(
             final MethodArgumentNotValidException e, final HttpServletRequest request) {
@@ -67,10 +66,10 @@ public class UserControllerAdvice {
             final UserAlreadyExistsException e, final HttpServletRequest request) {
         Map<String, String> body = Map.of(
                 "timestamp", ZonedDateTime.now().toString(),
-                "status", String.valueOf(HttpStatus.CONFLICT.value()),
-                "error", HttpStatus.CONFLICT.getReasonPhrase(),
+                "status", String.valueOf(HttpStatus.BAD_REQUEST.value()),
+                "error", HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 "message", e.getMessage() + " データが既に存在しています。新しいデータを追加できません",
                 "path", request.getRequestURI());
-        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 }
