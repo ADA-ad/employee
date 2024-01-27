@@ -80,7 +80,7 @@ public class EmployeeService {
     public Employee insert(String name, Integer age, String address) {
         Employee employee = Employee.createEmployee(name, age, address);
 
-        if (employeeMapper.findByNameAndAddress(name,address).isPresent()) {
+        if (!employeeMapper.findByNameAndAddress(name, address).isEmpty()) {
             throw new UserAlreadyExistsException("ユーザーは重複不可。");
         }
         employeeMapper.insert(employee);

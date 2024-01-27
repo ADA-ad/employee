@@ -68,7 +68,7 @@ public interface EmployeeMapper {
      *
      */
     @Select("SELECT * FROM employees WHERE name = #{name} AND address = #{address}")
-    Optional<Employee> findByNameAndAddress(String name, String address);
+    List<Employee> findByNameAndAddress(String name, String address);
 
 
 }
