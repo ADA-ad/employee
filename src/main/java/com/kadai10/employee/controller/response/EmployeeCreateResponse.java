@@ -10,13 +10,10 @@ import lombok.Data;
 public class EmployeeCreateResponse {
     /**
      * ユーザーレスポンスを作成するためのコンストラクタです.
-     * @param name 名前
-     * @param age 年齢
-     * @param address 住所
+     * @param message メッセージ
+
      */
 
-    private String name;
-    private Integer age;
-    private String address;
+    private String message;
 
 }

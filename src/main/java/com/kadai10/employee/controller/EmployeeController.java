@@ -92,8 +92,7 @@ public class EmployeeController {
         Employee employee = employeeService.insert(employeeCreateRequest.name(), employeeCreateRequest.age(),
                 employeeCreateRequest.address());
         URI location = uriBuilder.path("/employees/{id}").buildAndExpand(employee.getId()).toUri();
-        EmployeeCreateResponse body = new EmployeeCreateResponse(employee.getName(), employee.getAge(),
-                employee.getAddress() + " を登録しました");
+        EmployeeCreateResponse body = new EmployeeCreateResponse( "ユーザーを登録しました");
         return ResponseEntity.created(location).body(body);
 
     }

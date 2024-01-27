@@ -6,14 +6,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * アプリケーション内で発生する例外に対する処理を提供する. ControllerAdvice として機能するクラスです。
