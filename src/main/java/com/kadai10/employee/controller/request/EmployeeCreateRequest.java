@@ -23,8 +23,7 @@ public record EmployeeCreateRequest (
         @NotBlank(message = "住所を入力してください")
         @Size(max = 50)
         String address
-)
-{
+) {
 
 
 
