@@ -1,5 +1,6 @@
 package com.kadai10.employee.entity;
 
+import com.kadai10.employee.exception.UserNotFoundException;
 import lombok.Data;
 /**
  * ＠Dataアノテーションを付与すると、対象クラス内のインスタンス変数に対してgetter/setterでアクセスすることが可能となります。
@@ -48,4 +49,17 @@ public class Employee {
         this.age = age;
         this.address = address;
     }
+    /**
+     * 新しいユーザーオブジェクトを作成する静的メソッド.
+     *
+     * @param name       ユーザーの名前
+     * @param age ユーザーの年齢
+     * @param address ユーザーの住所
+     * @return 新しいユーザーオブジェクト
+     */
+
+    public static Employee createEmployee(String name, Integer age, String address) {
+        return new Employee(null, name, age,address);
+    }
+
 }

@@ -1,7 +1,9 @@
 package com.kadai10.employee.mapper;
 
 import com.kadai10.employee.entity.Employee;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -49,5 +51,24 @@ public interface EmployeeMapper {
      * @return 指定された住所に対応するユーザーを返す
      */
     @Select("SELECT * FROM employees WHERE address LIKE CONCAT('%', #{address}, '%')")
-    List<Employee> findByAddress(String address);
+    Optional<Employee> findByAddress(String address);
+
+    /**
+     * ユーザーをデータベースに登録.
+     * @param employee 登録するユーザーオブジェクト
+     */
+    @Insert("INSERT INTO employees (name, age, address) VALUES (#{name}, #{age}, #{address})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    void insert(Employee employee);
+
+    /**
+     * 指定された名前と住所に対応するユーザーを取得し、重複チェック確認用
+     * @param name 登録するユーザーオブジェクト
+     * @param address 登録するユーザーオブジェクト
+     *
+     */
+    @Select("SELECT * FROM employees WHERE name = #{name} AND address = #{address}")
+    List<Employee> findByNameAndAddress(String name, String address);
+
+
 }

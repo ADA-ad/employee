@@ -1,6 +1,7 @@
 package com.kadai10.employee.service;
 
 import com.kadai10.employee.entity.Employee;
+import com.kadai10.employee.exception.UserAlreadyExistsException;
 import com.kadai10.employee.exception.UserNotFoundException;
 import com.kadai10.employee.mapper.EmployeeMapper;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,12 @@ public class EmployeeService {
      * @return 指定されたIDに対応するユーザー情報。存在しない場合は空のOptionalを返す
      */
     public Employee findById(Integer id){
+　　　　　　　　　　　　　　 create
+        return employeeMapper.findById(id).orElseThrow(() -> new UserNotFoundException("userId " + id +" could not be" +
+                                                                                       " found"));
+
         return employeeMapper.findById(id).orElseThrow(() -> new UserNotFoundException("userId " + id +" could not be found"));
+　　　　　　　　　　　　　　　 main
     }
 
     /**
@@ -63,5 +69,26 @@ public class EmployeeService {
      * @return 指定された住所に対応するユーザー情報
      */
 
-    public List<Employee> findByAddress(String address){ return employeeMapper.findByAddress(address);}
+    public Optional<Employee> findByAddress(String address){ return employeeMapper.findByAddress(address);}
+
+    /**
+     * 新しいユーザーを登録するメソッド.
+     *
+     * @param name  登録するユーザーの名前
+     * @param age 登録するユーザーの年齢
+     * @param address 登録するユーザーの住所
+     * @return 登録されたユーザー情報
+     * @throws UserAlreadyExistsException 名前と住所完全一致、ユーザーが重複する場合
+     */
+
+    public Employee insert(String name, Integer age, String address) {
+        Employee employee = Employee.createEmployee(name, age, address);
+
+        if (!employeeMapper.findByNameAndAddress(name, address).isEmpty()) {
+            throw new UserAlreadyExistsException("ユーザーは重複不可。");
+        }
+        employeeMapper.insert(employee);
+        return employee;
+    }
+
 }
