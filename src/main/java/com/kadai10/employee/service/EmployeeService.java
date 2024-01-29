@@ -48,8 +48,12 @@ public class EmployeeService {
      * @return 指定されたIDに対応するユーザー情報。存在しない場合は空のOptionalを返す
      */
     public Employee findById(Integer id){
+　　　　　　　　　　　　　　 create
         return employeeMapper.findById(id).orElseThrow(() -> new UserNotFoundException("userId " + id +" could not be" +
                                                                                        " found"));
+
+        return employeeMapper.findById(id).orElseThrow(() -> new UserNotFoundException("userId " + id +" could not be found"));
+　　　　　　　　　　　　　　　 main
     }
 
     /**
