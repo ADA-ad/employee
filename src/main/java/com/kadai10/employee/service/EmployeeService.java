@@ -3,7 +3,7 @@ package com.kadai10.employee.service;
 import com.kadai10.employee.controller.request.EmployeeUpdateRequest;
 import com.kadai10.employee.entity.Employee;
 import com.kadai10.employee.exception.EmployeeAlreadyExistsException;
-import com.kadai10.employee.exception.UserNotFoundException;
+import com.kadai10.employee.exception.EmployeeNotFoundException;
 import com.kadai10.employee.mapper.EmployeeMapper;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -49,7 +49,8 @@ public class EmployeeService {
      * @return 指定されたIDに対応するユーザー情報。存在しない場合は空のOptionalを返す
      */
     public Optional<Employee> findById(Integer id){
-        return employeeMapper.findById(id);
+        return Optional.ofNullable(employeeMapper.findById(id).orElseThrow(() -> new EmployeeNotFoundException(
+                "ユーザーは存在しないです。")));
     }
 
     /**
@@ -57,7 +58,9 @@ public class EmployeeService {
      * @param age 取得したいユーザーの年齢
      * @return 指定された年齢に対応するユーザー情報
      */
-    public List<Employee> findByAge(Integer age){ return employeeMapper.findByAge(age);}
+    public List<Employee> findByAge(Integer age){
+        return employeeMapper.findByAge(age);
+    }
 
     /**
      * 指定された住所に対応するユーザーを取得するメソッド
@@ -65,7 +68,9 @@ public class EmployeeService {
      * @return 指定された住所に対応するユーザー情報
      */
 
-    public List<Employee> findByAddress(String address){ return employeeMapper.findByAddress(address);}
+    public List<Employee> findByAddress(String address){
+        return employeeMapper.findByAddress(address);
+    }
 
     /**
      * 新しいユーザーを登録するメソッド.
@@ -77,7 +82,11 @@ public class EmployeeService {
      */
 
     public Employee insert(String name, Integer age, String address) {
-        Employee employee = Employee.createEmployee(name, age, address);
+
+        Employee employee = new Employee(name, age, address);
+        if (!employeeMapper.findByNameAndAddress(name, address).isEmpty()) {
+            throw new EmployeeAlreadyExistsException("ユーザーは重複不可。");
+        }
         employeeMapper.insert(employee);
         return employee;
     }
@@ -87,27 +96,27 @@ public class EmployeeService {
      *
      * @param id 更新するユーザーのID
      * @return 更新されたユーザー情報
-     * @throws UserNotFoundException            指定されたIDのユーザーが見つからない場合
+     * @throws EmployeeNotFoundException            指定されたIDのユーザーが見つからない場合
      *
      */
     public Employee updateEmployee(final Integer id, EmployeeUpdateRequest employeeUpdateRequest) {
-        try {
-            Employee employee = employeeMapper.findById(id)
-                    .orElseThrow(() -> new UserNotFoundException("userID:" + id + "not fond"));
-            if (employeeUpdateRequest.getName() != null) {
-                employee.setName(employeeUpdateRequest.getName());
-            }
-            if (employeeUpdateRequest.getAge() != null) {
-                employee.setAge(employeeUpdateRequest.getAge());
-            }
-            if (employeeUpdateRequest.getAddress() != null) {
-                employee.setAddress(employee.getAddress());
-            }
-            employeeMapper.updateEmployee(employee);
-            return employee;
-        } catch (EmployeeAlreadyExistsException e) {
-            throw new EmployeeAlreadyExistsException("ユーザーが重複している");
+        Employee employee = employeeMapper.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException("ユーザーは存在しない"));
+        if (employeeUpdateRequest.getName() != null) {
+            employee.setName(employeeUpdateRequest.getName());
         }
+        if (employeeUpdateRequest.getAge() != null) {
+            employee.setAge(employeeUpdateRequest.getAge());
+        }
+        if (employeeUpdateRequest.getAddress() != null) {
+            employee.setAddress(employee.getAddress());
+        }
+        if (!employeeMapper.findByNameAndAddress(employeeUpdateRequest.getName(), employeeUpdateRequest.getAddress()).isEmpty()) {
+            throw new EmployeeAlreadyExistsException("ユーザーは重複不可。");
+        }
+
+        employeeMapper.updateEmployee(employee);
+        return employee;
 
     }
 

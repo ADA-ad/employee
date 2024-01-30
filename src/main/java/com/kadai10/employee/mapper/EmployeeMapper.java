@@ -60,11 +60,21 @@ public interface EmployeeMapper {
     void insert(Employee employee);
 
     /**
+     * 指定された名前と住所に対応するユーザーを取得し、重複チェック確認用
+     * @param name 登録するユーザーオブジェクト
+     * @param address 登録するユーザーオブジェクト
+     *
+     */
+    @Select("SELECT * FROM employees WHERE name = #{name} AND address = #{address}")
+    List<Employee> findByNameAndAddress(@Param("name")String name, @Param("address")String address);
+
+
+    /**
      * データベースのユーザー情報を更新.
      *
      * @param  employee 更新するユーザーオブジェクト
      */
     @Update("UPDATE employees SET name = #{name}, age = #{age}, address = #{address} WHERE id = #{id}")
-    void updateEmployee(Employee employee);
+    void updateEmployee(@Param("name") Employee employee);
 
 }

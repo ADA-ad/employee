@@ -1,7 +1,7 @@
 package com.kadai10.employee.controller;
 
 import com.kadai10.employee.exception.EmployeeAlreadyExistsException;
-import com.kadai10.employee.exception.UserNotFoundException;
+import com.kadai10.employee.exception.EmployeeNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ import java.util.Map;
  * 例外処理、エラーハンドリング、および異常状態のレスポンス生成などを行います。
  */
 @ControllerAdvice
-public class UserControllerAdvice {
+public class EmployeeControllerAdvice {
     /**
      * ユーザーが見つからない場合の例外ハンドリングメソッド。
      *
@@ -31,9 +31,9 @@ public class UserControllerAdvice {
      * @param request HTTPリクエスト
      * @return エラーレスポンス
      */
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler(EmployeeNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleUserNotFoundException(
-            final UserNotFoundException e, final @NotNull HttpServletRequest request) {
+            final EmployeeNotFoundException e, final @NotNull HttpServletRequest request) {
         Map<String, String> body = Map.of(
                 "timestamp", ZonedDateTime.now().toString(),
                 "status", String.valueOf(HttpStatus.NOT_FOUND.value()),

@@ -37,7 +37,6 @@ public class EmployeeController {
 
     /**
      * 全てのユーザー情報を取得するメソッド.
-     *
      * @return 全てのユーザー情報のリスト
      */
     @GetMapping("/employees")
@@ -88,11 +87,10 @@ public class EmployeeController {
     @PostMapping("/employees")
     public ResponseEntity<EmployeeResponse> insert(final @RequestBody @Validated EmployeeCreateRequest employeeCreateRequest,
                                                    final UriComponentsBuilder uriBuilder) {
-        Employee employee = employeeService.insert(employeeCreateRequest.getName(), employeeCreateRequest.getAge(),
-                employeeCreateRequest.getAddress());
+        Employee employee = employeeService.insert(employeeCreateRequest.name(), employeeCreateRequest.age(),
+                employeeCreateRequest.address());
         URI location = uriBuilder.path("/employees/{id}").buildAndExpand(employee.getId()).toUri();
-        EmployeeResponse body = new EmployeeResponse( employee.getName(), employee.getAge(),
-                employee.getAddress() + "を登録しました");
+        EmployeeResponse body = new EmployeeResponse("ユーザーを登録しました。");
         return ResponseEntity.created(location).body(body);
     }
 
@@ -105,11 +103,11 @@ public class EmployeeController {
      */
     @PatchMapping("/employees/{id}")
     public ResponseEntity<EmployeeResponse> updateUser(final @PathVariable @Valid Integer id,
-                                                       final @RequestBody EmployeeUpdateRequest employeeUpdateRequest,
+                                                       final @RequestBody @PathVariable EmployeeUpdateRequest employeeUpdateRequest,
                                                        final UriComponentsBuilder uriBuilder) {
         Employee employee = employeeService.updateEmployee(id, employeeUpdateRequest);
         URI location = uriBuilder.path("/employees/{id}").buildAndExpand(employee.getId()).toUri();
-        EmployeeResponse body = new EmployeeResponse(employee.getName(), employee.getAge(), employee.getAddress() + "を更新しました");
+        EmployeeResponse body = new EmployeeResponse("ユーザーを更新しました。");
         return ResponseEntity.created(location).body(body);
     }
 

@@ -8,9 +8,11 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class EmployeeResponse {
+    /**
+     * ユーザーレスポンスを作成するためのコンストラクタです.
+     * @param message メッセージ
 
-    private String name;
-    private Integer age;
-    private String address;
+     */
+    private String message;
 
 }
