@@ -60,7 +60,32 @@ curl --location 'http://localhost:8080/employees/ages?age=16'
 curl --location 'http://localhost:8080/employees/address?address=%E4%BA%AC%E9%83%BD%E5%BA%9C'
 ``` 
 - 200を返すことを確認
-- 『address = 京都府』を検索し、レスポンスのボティがに住所は京都府のデータ、1件出力される
+- 『address = 京都府』を検索し、レスポンスのボティがに住所は京都府のデータ、1件出力される 
+
+## UPDATE処理 
+### ①通常処理
+<img width="400" alt="スクリーンショット 2024-01-31 22 59 10" src="https://github.com/ADA-ad/employee/assets/152973671/5cade367-c146-452b-8306-0386ccbe7c7d">
+
+
+```bash
+curl --location --request PATCH 'http://localhost:8080/employees/2' \
+--header 'Content-Type: application/json' \
+--data '{
+	"name": "花房　剛志",
+	"age": 24,
+	"address": "静岡県伊豆市1-2-3"
+}'
+``` 
+- 201を返すことを確認
+- {
+  "name": "花房　剛志",
+  "age": 24,
+  "address": "静岡県伊豆市1-2-3"
+  }をbodyに入力し、  
+レスポンスのボティがに "message": "ユーザーを更新しました。"が出力される  
+
+### ②重複チェック
+
 
 
 
