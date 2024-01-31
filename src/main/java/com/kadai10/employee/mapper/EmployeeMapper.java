@@ -1,5 +1,6 @@
 package com.kadai10.employee.mapper;
 
+import com.kadai10.employee.controller.request.EmployeeUpdateRequest;
 import com.kadai10.employee.entity.Employee;
 import org.apache.ibatis.annotations.*;
 
@@ -75,6 +76,6 @@ public interface EmployeeMapper {
      * @param  employee 更新するユーザーオブジェクト
      */
     @Update("UPDATE employees SET name = #{name}, age = #{age}, address = #{address} WHERE id = #{id}")
-    void updateEmployee(@Param("name") Employee employee);
+    void updateEmployee(Employee employee);
 
 }

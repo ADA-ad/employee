@@ -6,6 +6,9 @@ import com.kadai10.employee.exception.EmployeeAlreadyExistsException;
 import com.kadai10.employee.exception.EmployeeNotFoundException;
 import com.kadai10.employee.mapper.EmployeeMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -99,7 +102,8 @@ public class EmployeeService {
      * @throws EmployeeNotFoundException            指定されたIDのユーザーが見つからない場合
      *
      */
-    public Employee updateEmployee(final Integer id, EmployeeUpdateRequest employeeUpdateRequest) {
+    public Employee updateEmployee( final Integer id, EmployeeUpdateRequest employeeUpdateRequest) {
+
         Employee employee = employeeMapper.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException("ユーザーは存在しない"));
         if (employeeUpdateRequest.getName() != null) {
