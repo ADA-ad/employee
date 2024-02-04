@@ -108,7 +108,38 @@ curl --location --request PATCH 'http://localhost:8080/employees/2' \
   名前と住所を重複したデータをbodyに入力し、  
   レスポンスのボティに "message": "ユーザーは重複不可。"が出力される  
 
+## ③バリデーションチェック
 
+<img width="400" alt="スクリーンショット 2024-02-04 21 16 29" src="https://github.com/ADA-ad/employee/assets/152973671/736899cf-2530-4156-9f17-d03e1cb44c4e">
+
+
+```bash
+curl --location --request PATCH 'http://localhost:8080/employees/2' \
+--header 'Content-Type: application/json' \
+--data '{
+	"name": "",
+	"age": 328888,
+	"address": ""
+}'
+``` 
+- 400を返すことを確認
+- {
+  "name": "",
+  "age": 328888,
+  "address": ""
+  }  
+  名前と住所をnullにして、年齢を200を超える数字をbodyに入力し、  
+  レスポンスのボティに  
+  "field": "address",
+  "message": "住所を入力してください", 
+
+  "field": "age",
+  "message": "200 以下の値にしてください", 
+
+  "field": "name",
+  "message": "名前を入力してください" 
+
+  が出力される  
 
 
 

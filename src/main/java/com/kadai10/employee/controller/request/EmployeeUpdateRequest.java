@@ -7,11 +7,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * ユーザー情報の更新リクエストを表すレコードクラスです. このクラスはユーザーの名前や年齢、住所などの更新が必要な情報を受け取ります。 ユーザー情報を更新する際に使用されます。
- *
  */
 @Data
 @AllArgsConstructor

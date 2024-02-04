@@ -6,7 +6,6 @@ package com.kadai10.employee.exception;
 public class EmployeeAlreadyExistsException extends RuntimeException{
     /**
      * ユーザーが既に存在する場合にスローされる例外クラス. この例外は、指定された職業がデータベースやリポジトリで見つかった場合にスローされます
-     *
      * @param message 例外メッセージ
      */
 

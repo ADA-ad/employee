@@ -6,8 +6,6 @@ import com.kadai10.employee.exception.EmployeeAlreadyExistsException;
 import com.kadai10.employee.exception.EmployeeNotFoundException;
 import com.kadai10.employee.mapper.EmployeeMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -77,13 +75,11 @@ public class EmployeeService {
 
     /**
      * 新しいユーザーを登録するメソッド.
-     *
      * @param name       登録するユーザーの名前
      * @param age 登録するユーザーの年齢
      * @param address 登録するユーザーの住所
      * @return 登録されたユーザー情報
      */
-
     public Employee insert(String name, Integer age, String address) {
 
         Employee employee = new Employee(name, age, address);
@@ -96,13 +92,12 @@ public class EmployeeService {
 
     /**
      * ユーザー情報を更新するメソッド.
-     *
      * @param id 更新するユーザーのID
      * @return 更新されたユーザー情報
-     * @throws EmployeeNotFoundException            指定されたIDのユーザーが見つからない場合
-     *
+     * @throws EmployeeNotFoundException  指定されたIDのユーザーが見つからない場合
+     * @throws EmployeeAlreadyExistsException  指定されたIDのユーザーが名前と住所が重複した場合
      */
-    public Employee updateEmployee( final Integer id, EmployeeUpdateRequest employeeUpdateRequest) {
+    public Employee updateEmployee(final Integer id, EmployeeUpdateRequest employeeUpdateRequest) {
 
         Employee employee = employeeMapper.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException("ユーザーは存在しない"));
@@ -113,7 +108,7 @@ public class EmployeeService {
             employee.setAge(employeeUpdateRequest.getAge());
         }
         if (employeeUpdateRequest.getAddress() != null) {
-            employee.setAddress(employee.getAddress());
+            employee.setAddress(employeeUpdateRequest.getAddress());
         }
         if (!employeeMapper.findByNameAndAddress(employeeUpdateRequest.getName(), employeeUpdateRequest.getAddress()).isEmpty()) {
             throw new EmployeeAlreadyExistsException("ユーザーは重複不可。");

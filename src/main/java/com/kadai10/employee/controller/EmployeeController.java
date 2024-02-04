@@ -103,7 +103,7 @@ public class EmployeeController {
      */
     @PatchMapping("/employees/{id}")
     public ResponseEntity<EmployeeResponse> updateUser(final @PathVariable @Valid Integer id,
-                                                       final @RequestBody  EmployeeUpdateRequest employeeUpdateRequest,
+                                                       final @RequestBody @Valid EmployeeUpdateRequest employeeUpdateRequest,
                                                        final UriComponentsBuilder uriBuilder) {
         Employee employee = employeeService.updateEmployee(id, employeeUpdateRequest);
         URI location = uriBuilder.path("/employees/{id}").buildAndExpand(employee.getId()).toUri();

@@ -61,15 +61,5 @@ public class Employee {
         this.age = age;
         this.address = address;
     }
-    /**
-     * 新しいユーザーオブジェクトを作成する静的メソッド.
-     *
-     * @param name       ユーザーの名前
-     * @param age ユーザーの年齢
-     * @param address ユーザーの住所
-     * @return 新しいユーザーオブジェクト
-     */
-
-
 
 }
