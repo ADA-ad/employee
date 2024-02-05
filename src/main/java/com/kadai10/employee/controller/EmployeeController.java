@@ -60,7 +60,7 @@ public class EmployeeController {
      * @return idによるユーザー情報の取得
      */
     @GetMapping("/employees/{id}")
-    public Optional<Employee> findById(@PathVariable("id") Integer id){ return employeeService.findById(id);}
+    public Employee findById(@PathVariable("id") Integer id){ return employeeService.findById(id);}
 
     /**
      * ageによるユーザー情報を取得するメソッド.
