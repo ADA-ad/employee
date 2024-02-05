@@ -3,10 +3,10 @@ package com.kadai10.employee.controller.request;
 import jakarta.validation.constraints.*;
 
 /**
- * ユーザー情報のリクエストを表すレコードクラスです. このクラスは新しいユーザーの作成の要求を受け取ります。
- *  @param name  ユーザーの名前を表すフィールド。
- *  @param age  ユーザーの年齢を表すフィールド。
- *  @param address  ユーザーの住所を表すフィールド。
+ * 従業員情報のリクエストを表すレコードクラスです. このクラスは新しい従業員の作成の要求を受け取ります。
+ *  @param name  従業員の名前を表すフィールド。
+ *  @param age  従業員の年齢を表すフィールド。
+ *  @param address  従業員の住所を表すフィールド。
  */
 
 public record EmployeeCreateRequest (

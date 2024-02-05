@@ -82,7 +82,7 @@ curl --location --request PATCH 'http://localhost:8080/employees/2' \
   "age": 24,
   "address": "静岡県伊豆市1-2-3"
   }をbodyに入力し、  
-レスポンスのボティに "message": "ユーザーを更新しました。"が出力される  
+レスポンスのボティに "message": "従業員を更新しました。"が出力される  
 
 
 ### ②重複チェック 
@@ -106,7 +106,7 @@ curl --location --request PATCH 'http://localhost:8080/employees/2' \
   "address": "静岡県伊豆市1-2-3"
   }  
   名前と住所を重複したデータをbodyに入力し、  
-  レスポンスのボティに "message": "ユーザーは重複不可。"が出力される  
+  レスポンスのボティに "message": "従業員は重複不可。"が出力される  
 
 ## ③バリデーションチェック
 

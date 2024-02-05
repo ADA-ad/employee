@@ -3,13 +3,13 @@ package com.kadai10.employee.controller.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 /**
- * EmployeeCreateResponse クラスは、ユーザーのレスポンスを表現するためのクラスです.
+ * EmployeeCreateResponse クラスは、従業員のレスポンスを表現するためのクラスです.
  */
 @Data
 @AllArgsConstructor
 public class EmployeeResponse {
     /**
-     * ユーザーレスポンスを作成するためのコンストラクタです.
+     * 従業員レスポンスを作成するためのコンストラクタです.
      * @param message メッセージ
 
      */

@@ -25,8 +25,8 @@ import java.util.Map;
 @ControllerAdvice
 public class EmployeeControllerAdvice {
     /**
-     * ユーザーが見つからない場合の例外ハンドリングメソッド。
-     * @param e       ユーザーが見つからない例外
+     * 従業員が見つからない場合の例外ハンドリングメソッド。
+     * @param e       従業員が見つからない例外
      * @param request HTTPリクエスト
      * @return エラーレスポンス
      */
@@ -60,7 +60,7 @@ public class EmployeeControllerAdvice {
     }
 
     /**
-     * 重複した職業が見つかった場合の例外ハンドリングメソッド。
+     * 重複した従業員が見つかった場合の例外ハンドリングメソッド。
      * @param e       重複した職業が見つかった例外
      * @param request HTTPリクエスト
      * @return エラーレスポンス
