@@ -77,21 +77,5 @@ public class EmployeeControllerAdvice {
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 
-    /**
-     * 重複したデータが見つかった場合の例外ハンドリングメソッド。
-     * @param e       重複したデータが見つかった例外
-     * @param request HTTPリクエスト
-     * @return エラーレスポンス
-     */
-    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public ResponseEntity<Map<String, String>> handleSqlIntegrityConstraintViolationException(
-            final SQLIntegrityConstraintViolationException e, final HttpServletRequest request) {
-        Map<String, String> body = Map.of(
-                "timestamp", ZonedDateTime.now().toString(),
-                "status", String.valueOf(HttpStatus.CONFLICT.value()),
-                "error", HttpStatus.CONFLICT.getReasonPhrase(),
-                "message", e.getMessage(),
-                "path", request.getRequestURI());
-        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
-    }
+
 }
