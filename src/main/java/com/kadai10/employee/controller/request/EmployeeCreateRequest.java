@@ -1,6 +1,11 @@
 package com.kadai10.employee.controller.request;
 
-import jakarta.validation.constraints.*;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 /**
  * 従業員情報のリクエストを表すレコードクラスです. このクラスは新しい従業員の作成の要求を受け取ります。
@@ -10,7 +15,7 @@ import jakarta.validation.constraints.*;
  */
 
 public record EmployeeCreateRequest (
-        @NotBlank (message = "名前を入力してください")
+        @NotBlank(message = "名前を入力してください")
         @Size(max = 8)
         String name,
 
