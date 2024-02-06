@@ -1,5 +1,19 @@
 package com.kadai10.employee.controller.request;
 
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+/**
+ * 従業員情報のリクエストを表すレコードクラスです. このクラスは新しい従業員の作成の要求を受け取ります。
+ *  @param name  従業員の名前を表すフィールド。
+ *  @param age  従業員の年齢を表すフィールド。
+ *  @param address  従業員の住所を表すフィールド。
+ */
+
 import jakarta.validation.constraints.*;
 
 /**
@@ -8,10 +22,8 @@ import jakarta.validation.constraints.*;
  * @param age  ユーザーの年齢を表すフィールド
  * @param address  ユーザーの住所を表すフィールド
  */
-
 public record EmployeeCreateRequest (
-
-        @NotBlank (message = "名前を入力してください")
+        @NotBlank(message = "名前を入力してください")
         @Size(max = 8)
         String name,
 
@@ -23,9 +35,10 @@ public record EmployeeCreateRequest (
         @NotBlank(message = "住所を入力してください")
         @Size(max = 50)
         String address
-)
-{
 
+) {
 
 
 }
+
+

@@ -33,7 +33,7 @@ curl --location 'http://localhost:8080/employees'
 curl --location 'http://localhost:8080/employees/names?name=%E4%BD%90%E8%97%A4'
 ``` 
 - 200を返すことを確認
-- 『name = 佐藤』を検索し、レスポンスのボティがに名前は佐藤のデータ、1件出力される
+- 『name = 佐藤』を検索し、レスポンスのボティに名前は佐藤のデータ、1件が出力される
 
 ### ③id取得API
 <img width="400" alt="スクリーンショット 2024-01-22 21 22 41" src="https://github.com/ADA-ad/mybatis-demo-202312/assets/152973671/dbc829c7-f4ac-4952-bc00-016a5fd28b0b">
@@ -42,7 +42,7 @@ curl --location 'http://localhost:8080/employees/names?name=%E4%BD%90%E8%97%A4'
 curl --location 'http://localhost:8080/employees/3'
 ``` 
 - 200を返すことを確認
-- 『3』を検索し、レスポンスのボティがにid = 3のデータ、1件出力される
+- 『3』を検索し、レスポンスのボティにid = 3のデータ、1件が出力される
 
 ### ④age取得API
 <img width="400" alt="スクリーンショット 2024-01-22 21 25 43" src="https://github.com/ADA-ad/mybatis-demo-202312/assets/152973671/d30cf664-0e0f-4e50-ada8-e52e6721c263">
@@ -51,7 +51,7 @@ curl --location 'http://localhost:8080/employees/3'
 curl --location 'http://localhost:8080/employees/ages?age=16'
 ``` 
 - 200を返すことを確認
-- 『age = 16』を検索し、レスポンスのボティがにage = 3のデータ、1件出力される
+- 『age = 16』を検索し、レスポンスのボティにage = 3のデータ、1件が出力される
 
 ### ⑤address取得API
 <img width="400" alt="スクリーンショット 2024-01-25 20 09 57" src="https://github.com/ADA-ad/Java05/assets/152973671/4db22790-0800-4352-8576-b84d5e318e4c">
@@ -60,6 +60,86 @@ curl --location 'http://localhost:8080/employees/ages?age=16'
 curl --location 'http://localhost:8080/employees/address?address=%E4%BA%AC%E9%83%BD%E5%BA%9C'
 ``` 
 - 200を返すことを確認
+- 『address = 京都府』を検索し、レスポンスのボティに住所は京都府のデータ、1件が出力される 
+
+## UPDATE処理 
+### ①通常処理
+<img width="400" alt="スクリーンショット 2024-01-31 22 59 10" src="https://github.com/ADA-ad/employee/assets/152973671/5cade367-c146-452b-8306-0386ccbe7c7d">
+
+
+```bash
+curl --location --request PATCH 'http://localhost:8080/employees/2' \
+--header 'Content-Type: application/json' \
+--data '{
+	"name": "花房　剛志",
+	"age": 24,
+	"address": "静岡県伊豆市1-2-3"
+}'
+``` 
+- 201を返すことを確認
+- {
+  "name": "花房　剛志",
+  "age": 24,
+  "address": "静岡県伊豆市1-2-3"
+  }をbodyに入力し、  
+レスポンスのボティに "message": "従業員を更新しました。"が出力される  
+
+
+### ②重複チェック 
+
+<img width="400" alt="スクリーンショット 2024-02-01 20 39 53" src="https://github.com/tomoya0844/kadai10/assets/152973671/9bfb0a76-140f-452e-aaca-c5ff8013ef0c">
+
+
+```bash
+curl --location --request PATCH 'http://localhost:8080/employees/2' \
+--header 'Content-Type: application/json' \
+--data '{
+	"name": "花房　剛志",
+	"age": 24,
+	"address": "静岡県伊豆市1-2-3"
+}'
+``` 
+- 409を返すことを確認
+- {
+  "name": "花房　剛志",
+  "age": 23,
+  "address": "静岡県伊豆市1-2-3"
+  }  
+  名前と住所を重複したデータをbodyに入力し、  
+  レスポンスのボティに "message": "従業員は重複不可。"が出力される  
+
+## ③バリデーションチェック
+
+<img width="400" alt="スクリーンショット 2024-02-04 21 16 29" src="https://github.com/ADA-ad/employee/assets/152973671/736899cf-2530-4156-9f17-d03e1cb44c4e">
+
+
+```bash
+curl --location --request PATCH 'http://localhost:8080/employees/2' \
+--header 'Content-Type: application/json' \
+--data '{
+	"name": "",
+	"age": 328888,
+	"address": ""
+}'
+``` 
+- 400を返すことを確認
+- {
+  "name": "",
+  "age": 328888,
+  "address": ""
+  }  
+  名前と住所をnullにして、年齢を200を超える数字をbodyに入力し、  
+  レスポンスのボティに  
+  "field": "address",
+  "message": "住所を入力してください", 
+
+  "field": "age",
+  "message": "200 以下の値にしてください", 
+
+  "field": "name",
+  "message": "名前を入力してください" 
+
+  が出力される
 - 『address = 京都府』を検索し、レスポンスのボティがに住所は京都府のデータ、1件出力される 
 
 ## CREATE処理
@@ -104,7 +184,6 @@ curl --location 'http://localhost:8080/employees' \
 	"name": "鈴木",
 	"age": 23,
 	"address": "東京都品川区1-1-1"
-}'
 }'
 ``` 
 - 409を返すことを確認
