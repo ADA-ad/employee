@@ -68,7 +68,6 @@ public class EmployeeService {
      * @param address 取得したい従業員の住所
      * @return 指定された住所に対応する従業員情報
      */
-
     public List<Employee> findByAddress(String address){
         return employeeMapper.findByAddress(address);
     }
@@ -118,5 +117,4 @@ public class EmployeeService {
         return employee;
 
     }
-
 }

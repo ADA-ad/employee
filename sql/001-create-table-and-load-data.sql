@@ -15,3 +15,5 @@ INSERT INTO employees (name, age, address) VALUES ("田中 ゆいと", 25, "奈�
 INSERT INTO employees (name, age, address) VALUES ("伊藤 はると", 28, "京都府京都市4-1-3");
 
 
+
+

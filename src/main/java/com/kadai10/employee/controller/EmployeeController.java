@@ -13,7 +13,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 従業員関連のHTTPリクエストに対するハンドラーを提供するコントローラークラスです。 従業員情報の取得、登録、更新、削除などの操作を処理します。
@@ -55,7 +54,6 @@ public class EmployeeController {
 
     /**
      * idによる従業員情報を取得するメソッド.
-     *
      * @param id 従業員idのインスタンス.
      * @return idによる従業員情報の取得
      */
@@ -80,11 +78,11 @@ public class EmployeeController {
 
     /**
      * 新しい従業員を登録するメソッド.
-     *
      * @param employeeCreateRequest 従業員登録に使用されるリクエストオブジェクト
      * @param uriBuilder  レスポンスヘッダーに含まれるLocation URI を構築するための UriComponentsBuilder
      */
     @PostMapping("/employees")
+
     public ResponseEntity<EmployeeResponse> insert(final @RequestBody @Validated EmployeeCreateRequest employeeCreateRequest,
                                                    final UriComponentsBuilder uriBuilder) {
         Employee employee = employeeService.insert(employeeCreateRequest.name(), employeeCreateRequest.age(),
@@ -93,6 +91,7 @@ public class EmployeeController {
         EmployeeResponse body = new EmployeeResponse("従業員を登録しました。");
         return ResponseEntity.created(location).body(body);
     }
+
 
     /**
      * 従業員情報を更新するメソッド.

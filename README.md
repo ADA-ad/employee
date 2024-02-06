@@ -54,7 +54,7 @@ curl --location 'http://localhost:8080/employees/ages?age=16'
 - 『age = 16』を検索し、レスポンスのボティにage = 3のデータ、1件が出力される
 
 ### ⑤address取得API
-<img width="400" alt="スクリーンショット 2024-01-22 21 28 51" src="https://github.com/ADA-ad/mybatis-demo-202312/assets/152973671/3ed796ac-f2ad-48f1-a498-bcb099691167">
+<img width="400" alt="スクリーンショット 2024-01-25 20 09 57" src="https://github.com/ADA-ad/Java05/assets/152973671/4db22790-0800-4352-8576-b84d5e318e4c">
 
 ```bash
 curl --location 'http://localhost:8080/employees/address?address=%E4%BA%AC%E9%83%BD%E5%BA%9C'
@@ -139,7 +139,57 @@ curl --location --request PATCH 'http://localhost:8080/employees/2' \
   "field": "name",
   "message": "名前を入力してください" 
 
-  が出力される  
+  が出力される
+- 『address = 京都府』を検索し、レスポンスのボティがに住所は京都府のデータ、1件出力される 
+
+## CREATE処理
+### ①登録処理を実装する  
+<img width="400" alt="スクリーンショット 2024-01-25 20 09 57" src="https://github.com/ADA-ad/Java05/assets/152973671/4db22790-0800-4352-8576-b84d5e318e4c">
+
+
+```bash
+curl --location 'http://localhost:8080/employees' \
+--header 'Content-Type: application/json' \
+--data '{
+	"name": "望月　智",
+	"age": 29,
+	"address": "東京都品川区1-1-1"
+}'
+``` 
+- 201を返すことを確認
+- name、ageとaddressを登録すると、登録した内容＋「を登録しました」を返す 
+
+### ②登録処理のバリデーションの挙動を実装する  
+<img width="400" alt="スクリーンショット 2024-01-25 21 19 12" src="https://github.com/ADA-ad/Java05/assets/152973671/a854b6e9-4cb5-467d-9d20-4d192786041b"> 
+
+```bash
+curl --location 'http://localhost:8080/employees' \
+--header 'Content-Type: application/json' \
+--data '{
+	"name": "",
+	"age": 23,
+	"address": "m"
+}'
+``` 
+- 400を返すことを確認
+- nameを空にして登録すると、「名前を入力してください」を返す 
+
+### ③登録処理の重複チェックを実装する 
+<img width="400" alt="スクリーンショット 2024-01-25 21 24 09" src="https://github.com/ADA-ad/Java05/assets/152973671/d1730a66-6065-4a36-a469-9900cb9a0e0b"> 
+
+```bash
+curl --location 'http://localhost:8080/employees' \
+--header 'Content-Type: application/json' \
+--data '{
+	"name": "鈴木",
+	"age": 23,
+	"address": "東京都品川区1-1-1"
+}'
+``` 
+- 409を返すことを確認
+- nameとaddressを重複にして登録すると、「ユーザーは重複不可。 データが既に存在しています。新しいデータを追加できません」を返す 
+
+
 
 
 
