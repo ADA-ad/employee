@@ -34,7 +34,7 @@ public class EmployeeControllerAdvice {
                 "timestamp", ZonedDateTime.now().toString(),
                 "status", String.valueOf(HttpStatus.NOT_FOUND.value()),
                 "error", HttpStatus.NOT_FOUND.getReasonPhrase(),
-                "message", "ユーザーが見つかりません",
+                "message", e.getMessage(),
                 "path", request.getRequestURI());
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
@@ -57,23 +57,6 @@ public class EmployeeControllerAdvice {
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
-    /**
-     * 重複したユーザーが見つかった場合の例外ハンドリングメソッド。
-     * @param e       重複した職業が見つかった例外
-     * @param request HTTPリクエスト
-     * @return エラーレスポンス
-     */
-    @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<Map<String, String>> handleUserAlreadyExistsException(
-            final UserAlreadyExistsException e, final HttpServletRequest request) {
-        Map<String, String> body = Map.of(
-                "timestamp", ZonedDateTime.now().toString(),
-                "status", String.valueOf(HttpStatus.BAD_REQUEST.value()),
-                "error", HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                "message", e.getMessage() + " データが既に存在しています。新しいデータを追加できません",
-                "path", request.getRequestURI());
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-    }
 
     /**
      * 重複した従業員が見つかった場合の例外ハンドリングメソッド。
