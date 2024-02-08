@@ -115,7 +115,7 @@ public class EmployeeController {
      * @param id 削除対象のユーザーID
      * @return HTTP 200 OK ステータスでレスポンスされるユーザー情報
      */
-    @DeleteMapping("/employees/delete/{id}")
+    @DeleteMapping("/employees/{id}")
     public ResponseEntity<EmployeeResponse> deleteEmployee(final @PathVariable @Valid Integer id) {
         Employee employee = employeeService.deleteEmployee(id);
         EmployeeResponse response = new EmployeeResponse( "ユーザーを削除しました。");
