@@ -121,13 +121,12 @@ public class EmployeeService {
     /**
      * 従業員情報を削除するメソッド.
      * @param id 削除するユーザーのID
-     * @return 削除されたユーザー情報
      * @throws EmployeeNotFoundException 指定されたIDのユーザーが見つからない場合
      */
-    public Employee deleteEmployee(final Integer id) {
-        Employee employee = employeeMapper.findById(id)
+    public void deleteEmployee(final Integer id) {
+        employeeMapper.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException("従業員は存在しない。"));
         employeeMapper.deleteEmployee(id);
-        return employee;
+
     }
 }

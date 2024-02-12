@@ -117,7 +117,7 @@ public class EmployeeController {
      */
     @DeleteMapping("/employees/{id}")
     public ResponseEntity<EmployeeResponse> deleteEmployee(final @PathVariable @Valid Integer id) {
-        Employee employee = employeeService.deleteEmployee(id);
+        employeeService.deleteEmployee(id);
         EmployeeResponse response = new EmployeeResponse( "ユーザーを削除しました。");
         return ResponseEntity.ok(response);
     }
