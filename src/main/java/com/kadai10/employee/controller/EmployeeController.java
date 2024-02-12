@@ -110,5 +110,17 @@ public class EmployeeController {
         return ResponseEntity.created(location).body(body);
     }
 
+    /**
+     * 従業員情報を削除するメソッド.
+     * @param id 削除対象のユーザーID
+     * @return HTTP 200 OK ステータスでレスポンスされるユーザー情報
+     */
+    @DeleteMapping("/employees/{id}")
+    public ResponseEntity<EmployeeResponse> deleteEmployee(final @PathVariable @Valid Integer id) {
+        employeeService.deleteEmployee(id);
+        EmployeeResponse response = new EmployeeResponse( "ユーザーを削除しました。");
+        return ResponseEntity.ok(response);
+    }
+
 
 }

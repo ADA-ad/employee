@@ -60,7 +60,55 @@ curl --location 'http://localhost:8080/employees/ages?age=16'
 curl --location 'http://localhost:8080/employees/address?address=%E4%BA%AC%E9%83%BD%E5%BA%9C'
 ``` 
 - 200を返すことを確認
-- 『address = 京都府』を検索し、レスポンスのボティに住所は京都府のデータ、1件が出力される 
+- 『address = 京都府』を検索し、レスポンスのボティに住所は京都府のデータ、1件が出力される
+
+## CREATE処理
+### ①登録処理を実装する
+<img width="400" alt="スクリーンショット 2024-01-25 20 09 57" src="https://github.com/ADA-ad/Java05/assets/152973671/4db22790-0800-4352-8576-b84d5e318e4c">
+
+
+```bash
+curl --location 'http://localhost:8080/employees' \
+--header 'Content-Type: application/json' \
+--data '{
+	"name": "望月　智",
+	"age": 29,
+	"address": "東京都品川区1-1-1"
+}'
+``` 
+- 201を返すことを確認
+- name、ageとaddressを登録すると、登録した内容＋「を登録しました」を返す
+
+### ②登録処理のバリデーションの挙動を実装する
+<img width="400" alt="スクリーンショット 2024-01-25 21 19 12" src="https://github.com/ADA-ad/Java05/assets/152973671/a854b6e9-4cb5-467d-9d20-4d192786041b"> 
+
+```bash
+curl --location 'http://localhost:8080/employees' \
+--header 'Content-Type: application/json' \
+--data '{
+	"name": "",
+	"age": 23,
+	"address": "m"
+}'
+``` 
+- 400を返すことを確認
+- nameを空にして登録すると、「名前を入力してください」を返す
+
+### ③登録処理の重複チェックを実装する
+<img width="400" alt="スクリーンショット 2024-01-25 21 24 09" src="https://github.com/ADA-ad/Java05/assets/152973671/d1730a66-6065-4a36-a469-9900cb9a0e0b"> 
+
+```bash
+curl --location 'http://localhost:8080/employees' \
+--header 'Content-Type: application/json' \
+--data '{
+	"name": "鈴木",
+	"age": 23,
+	"address": "東京都品川区1-1-1"
+}'
+``` 
+- 409を返すことを確認
+- nameとaddressを重複にして登録すると、「ユーザーは重複不可。 データが既に存在しています。新しいデータを追加できません」を返す
+
 
 ## UPDATE処理 
 ### ①通常処理
@@ -142,54 +190,26 @@ curl --location --request PATCH 'http://localhost:8080/employees/2' \
   が出力される
 - 『address = 京都府』を検索し、レスポンスのボティがに住所は京都府のデータ、1件出力される 
 
-## CREATE処理
-### ①登録処理を実装する  
-<img width="400" alt="スクリーンショット 2024-01-25 20 09 57" src="https://github.com/ADA-ad/Java05/assets/152973671/4db22790-0800-4352-8576-b84d5e318e4c">
-
-
-```bash
-curl --location 'http://localhost:8080/employees' \
---header 'Content-Type: application/json' \
---data '{
-	"name": "望月　智",
-	"age": 29,
-	"address": "東京都品川区1-1-1"
-}'
-``` 
-- 201を返すことを確認
-- name、ageとaddressを登録すると、登録した内容＋「を登録しました」を返す 
-
-### ②登録処理のバリデーションの挙動を実装する  
-<img width="400" alt="スクリーンショット 2024-01-25 21 19 12" src="https://github.com/ADA-ad/Java05/assets/152973671/a854b6e9-4cb5-467d-9d20-4d192786041b"> 
+## DELETE処理
+### ①通常処理
+<img width="400" alt="スクリーンショット 2024-02-07 21 44 47" src="https://github.com/ADA-ad/employee/assets/152973671/e3a0f5fa-6542-4024-b583-43caf864088e">
 
 ```bash
-curl --location 'http://localhost:8080/employees' \
---header 'Content-Type: application/json' \
---data '{
-	"name": "",
-	"age": 23,
-	"address": "m"
-}'
+curl --location --request DELETE 'http://localhost:8080/employees/delete/7' \
+--data ''
 ``` 
-- 400を返すことを確認
-- nameを空にして登録すると、「名前を入力してください」を返す 
+- 200を返すことを確認
+- 『id = 7』を入力し、「ユーザーを削除しました。」を返す
 
-### ③登録処理の重複チェックを実装する 
-<img width="400" alt="スクリーンショット 2024-01-25 21 24 09" src="https://github.com/ADA-ad/Java05/assets/152973671/d1730a66-6065-4a36-a469-9900cb9a0e0b"> 
+### ②nullチェック
+<img width="400" alt="スクリーンショット 2024-02-07 21 54 07" src="https://github.com/ADA-ad/employee/assets/152973671/d87a101c-9916-4214-ad9f-a2a80d0e550a">
 
 ```bash
-curl --location 'http://localhost:8080/employees' \
---header 'Content-Type: application/json' \
---data '{
-	"name": "鈴木",
-	"age": 23,
-	"address": "東京都品川区1-1-1"
-}'
+curl --location --request DELETE 'http://localhost:8080/employees/delete/70' \
+--data ''
 ``` 
-- 409を返すことを確認
-- nameとaddressを重複にして登録すると、「ユーザーは重複不可。 データが既に存在しています。新しいデータを追加できません」を返す 
-
-
+- 404を返すことを確認
+- 存在しないid、『id = 70』を入力し、「従業員は存在しない。」を返す
 
 
 

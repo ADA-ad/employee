@@ -75,4 +75,10 @@ public interface EmployeeMapper {
     @Update("UPDATE employees SET name = #{name}, age = #{age}, address = #{address} WHERE id = #{id}")
     void updateEmployee(Employee employee);
 
+    /**
+     * データベースの従業員を削除。
+     * @param id 削除するユーザーのid
+     */
+    @Delete("DELETE FROM employees WHERE id = #{id}")
+    void deleteEmployee(Integer id);
 }

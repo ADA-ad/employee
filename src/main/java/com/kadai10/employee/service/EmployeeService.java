@@ -99,7 +99,7 @@ public class EmployeeService {
     public Employee updateEmployee(final Integer id, EmployeeUpdateRequest employeeUpdateRequest) {
 
         Employee employee = employeeMapper.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException("従業員は存在しない"));
+                .orElseThrow(() -> new EmployeeNotFoundException("従業員は存在しない。"));
         if (employeeUpdateRequest.getName() != null) {
             employee.setName(employeeUpdateRequest.getName());
         }
@@ -115,6 +115,18 @@ public class EmployeeService {
 
         employeeMapper.updateEmployee(employee);
         return employee;
+
+    }
+
+    /**
+     * 従業員情報を削除するメソッド.
+     * @param id 削除するユーザーのID
+     * @throws EmployeeNotFoundException 指定されたIDのユーザーが見つからない場合
+     */
+    public void deleteEmployee(final Integer id) {
+        employeeMapper.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException("従業員は存在しない。"));
+        employeeMapper.deleteEmployee(id);
 
     }
 }
