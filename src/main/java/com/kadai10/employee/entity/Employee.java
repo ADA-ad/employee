@@ -1,5 +1,6 @@
 package com.kadai10.employee.entity;
 
+import com.kadai10.employee.mapper.EmployeeMapper;
 import lombok.Data;
 /**
  * ＠Dataアノテーションを付与すると、対象クラス内のインスタンス変数に対してgetter/setterでアクセスすることが可能となります。
@@ -61,5 +62,6 @@ public class Employee {
         this.age = age;
         this.address = address;
     }
+
 
 }
