@@ -50,23 +50,41 @@ public class EmployeeServiceTest {
         verify(employeeMapper).findById(1);
     }
 
-
     //READ機能のテスト(指定idの例外)GET
     @Test
     public void 存在しないIDを指定したときに例外処理が動作すること() throws
          EmployeeNotFoundException {
          doReturn(Optional.empty()).when(employeeMapper).findById(100);
          assertThrows(EmployeeNotFoundException.class, () -> {
-         employeeService.findById(100);});
+         employeeService.findById(100);
+         });
          verify(employeeMapper).findById(100);
    }
 
     //READ機能のテスト(指定name)GET
     @Test
     public void 存在する名前を指定したときに正常に従業員情報が返されること() {
-        doReturn((new Employee(1,"鈴木 碧", 16, "東京都品川区1-1-1"))).when(employeeMapper).findByName("鈴木 碧");
-        Employee actual = (Employee) employeeService.findByName("鈴木 碧");
-        assertThat(actual).isEqualTo(new Employee(1, "鈴木 碧", 16, "東京都品川区1-1-1"));
+        doReturn(List.of(new Employee(1,"鈴木 碧", 16, "東京都品川区1-1-1"))).when(employeeMapper).findByName("鈴木 碧");
+        List<Employee> actual = employeeService.findByName("鈴木 碧");
+        assertThat(actual).isEqualTo(List.of(new Employee(1, "鈴木 碧", 16, "東京都品川区1-1-1")));
         verify(employeeMapper).findByName("鈴木 碧");
    }
+
+    //READ機能のテスト(指定age)GET
+    @Test
+    public void 存在する年齢を指定したときに正常に従業員情報が返されること() {
+        doReturn(List.of(new Employee(1,"鈴木 碧", 16, "東京都品川区1-1-1"))).when(employeeMapper).findByAge(16);
+        List<Employee> actual = employeeService.findByAge(16);
+        assertThat(actual).isEqualTo(List.of(new Employee(1, "鈴木 碧", 16, "東京都品川区1-1-1")));
+        verify(employeeMapper).findByAge(16);
+    }
+
+    //READ機能のテスト(指定address)GET
+    @Test
+    public void 存在する住所を指定したときに正常に従業員情報が返されること() {
+        doReturn(List.of(new Employee(1,"鈴木 碧", 16, "東京都品川区1-1-1"))).when(employeeMapper).findByAddress("東京都品川区1-1-1");
+        List<Employee> actual = employeeService.findByAddress("東京都品川区1-1-1");
+        assertThat(actual).isEqualTo(List.of(new Employee(1, "鈴木 碧", 16, "東京都品川区1-1-1")));
+        verify(employeeMapper).findByAddress("東京都品川区1-1-1");
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,11 +22,11 @@ class EmployeeMapperTest {
     @Autowired
     EmployeeMapper employeeMapper;
 
-
+    //READ機能のDBテスト(全件取得)
     @Test
     @DataSet(value = "datasets/employees.yml")
     @Transactional
-    void すべてのユーザーが取得できること() {
+    void すべての従業員が取得できること() {
         List<Employee> employees = employeeMapper.findAll();
         assertThat(employees)
                 .hasSize(5)
@@ -35,5 +36,50 @@ class EmployeeMapperTest {
                         new Employee(3,"高橋 大雅", 18, "大阪府和泉市2-2-3"),
                         new Employee(4,"田中 ゆいと", 25, "奈良県生駒市3-1-3"),
                         new Employee(5,"伊藤 はると", 28, "京都府京都市4-1-3"));
+    }
+
+    //READ機能のDBテスト(指定したID)
+    @Test
+    @DataSet(value = "datasets/employees.yml")
+    @Transactional
+    void 指定したIDの従業員情報を獲得すること() {
+        Optional<Employee> employee = employeeMapper.findById(1);
+        assertThat(employee).contains(new Employee(1, "鈴木 碧", 16, "東京都品川区1-1-1"));
+    }
+
+    //READ機能のDBテスト(指定したIDが存在しない場合)
+    @Test
+    @DataSet(value = "datasets/employees.yml")
+    @Transactional
+    void 存在しないIDを指定する場合に空の情報を獲得すること() {
+        Optional<Employee> employee = employeeMapper.findById(100);
+        assertThat(employee).isEmpty();
+    }
+
+    //READ機能のDBテスト(指定したname)
+    @Test
+    @DataSet(value = "datasets/employees.yml")
+    @Transactional
+    void 指定した名前の従業員情報を獲得すること() {
+        List<Employee> employee = employeeMapper.findByName("鈴木 碧");
+        assertThat(employee).contains(new Employee(1, "鈴木 碧", 16, "東京都品川区1-1-1"));
+    }
+
+    //READ機能のDBテスト(指定したage)
+    @Test
+    @DataSet(value = "datasets/employees.yml")
+    @Transactional
+    void 指定した年齢の従業員情報を獲得すること() {
+        List<Employee> employee = employeeMapper.findByAge(16);
+        assertThat(employee).contains(new Employee(1, "鈴木 碧", 16, "東京都品川区1-1-1"));
+    }
+
+    //READ機能のDBテスト(指定したaddress)
+    @Test
+    @DataSet(value = "datasets/employees.yml")
+    @Transactional
+    void 指定した住所の従業員情報を獲得すること() {
+        List<Employee> employee = employeeMapper.findByAddress("東京都品川区1-1-1");
+        assertThat(employee).contains(new Employee(1, "鈴木 碧", 16, "東京都品川区1-1-1"));
     }
 }
