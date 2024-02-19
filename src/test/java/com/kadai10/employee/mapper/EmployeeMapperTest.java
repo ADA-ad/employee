@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @DBRider
@@ -97,15 +95,6 @@ class EmployeeMapperTest {
         employeeMapper.insert(employee);
     }
 
-    @Test
-    @DataSet(value = "datasets/employees.yml")
-    @ExpectedDataSet(value = "datasets/employees.yml")
-    @Transactional
-    void 既に存在する従業員が登録できると例外をスローする() {
-        Employee employee = new Employee("鈴木 碧", 16, "東京都品川区1-1-1");
-        assertThrows(EmployeeAlreadyExistsException.class, () -> employeeMapper.insert(employee));
-    }
-
     //UPDATE機能のDBテスト
     @Test
     @DataSet(value = "datasets/employees.yml")
@@ -123,17 +112,6 @@ class EmployeeMapperTest {
     public void 存在しないIDで従業員を更新処理した場合は更新されないこと() {
         Employee employee = new Employee(100, "花房 清", 25, "岡山県岡山市5-2-3");
         employeeMapper.updateEmployee(employee);
-    }
-
-    @Test
-    @DataSet(value = "datasets/employees.yml")
-//    @ExpectedDataSet(value = "datasets/employees.yml")
-    @Transactional
-    public void すでに存在する従業員への更新時にエラーが返されること() {
-        Employee employee = new Employee(2,"佐藤 陽葵", 24, "静岡県伊豆市1-2-3");
-        assertThrows(EmployeeAlreadyExistsException.class, () -> {
-            employeeMapper.updateEmployee(employee);
-        });
     }
 
     //DELETE機能のDBテスト

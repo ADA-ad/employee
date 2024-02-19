@@ -238,3 +238,22 @@ curl --location --request DELETE 'http://localhost:8080/employees/delete/70' \
 
 <img width="600" alt="スクリーンショット 2024-02-17 18 46 06" src="https://github.com/simamumu89/Todo_API/assets/152973671/9c77352a-6892-42fe-924d-b486ef1914b9">
 
+### CREATE処理のServiceテスト
+#### 実装したテスト内容
+
+- 存在しない従業員情報を新規登録すること
+- 既に存在する従業員情報を新規登録すること
+
+### 二つ全てのテスト成功
+
+<img width="600" alt="スクリーンショット 2024-02-19 20 19 17" src="https://github.com/ADA-ad/employee/assets/152973671/f8524f6e-8c6f-4b9e-9942-e634ecbe3748">
+<img width="600" alt="スクリーンショット 2024-02-19 20 19 52" src="https://github.com/ADA-ad/employee/assets/152973671/58a5a9df-a6c6-430b-bf3d-ab7eecd66d5f"> 
+
+### CREATE処理のDBテスト
+#### 実装したテスト内容
+
+- 新規の従業員が登録できること
+
+### テスト成功
+
+<img width="600" alt="スクリーンショット 2024-02-19 20 20 28" src="https://github.com/ADA-ad/employee/assets/152973671/6c0e1f2e-0f90-4b7b-8ba2-a0d8c069e95e">
