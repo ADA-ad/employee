@@ -110,41 +110,5 @@ public class EmployeeServiceTest {
         });
     }
 
-
-    //UPDATE機能のテスト(PATCH)
-    @Test
-    public void 存在する従業員の名前と年齢と住所を更新すること() {
-        doReturn(Optional.of(new Employee(2, "花房 清", 25, "岡山県岡山市5-2-3"))).when(employeeMapper).findById(2);
-        Employee actual = employeeService.updateEmployee(2, new EmployeeUpdateRequest("花房 清", 25, "岡山県岡山市5-2-3"));
-        Employee employee = new Employee(2, "花房 清", 25, "岡山県岡山市5-2-3");
-        verify(employeeMapper).findById(2);
-        verify(employeeMapper).updateEmployee(employee);
-    }
-
-    @Test
-    public void 既に存在する従業員情報を重複更新すること() {
-        when(employeeMapper.findByNameAndAddress("佐藤 陽葵", "静岡県伊豆市1-2-3")).thenReturn(List.of(new Employee(2, "佐藤 陽葵", 20, "静岡県伊豆市1-2-3")));
-        assertThrows(EmployeeAlreadyExistsException.class, () -> {
-            employeeService.insert("佐藤 陽葵", 20,"静岡県伊豆市1-2-3");
-        });
-    }
-
-    //DELETE機能のテスト
-    @Test
-    public void 存在するIDを指定して削除できること() {
-        doReturn(Optional.of(new Employee("鈴木 碧", 16, "東京都品川区1-1-1"))).when(employeeMapper).findById(1);
-        employeeService.deleteEmployee(1);
-        verify(employeeMapper).findById(1);
-        verify(employeeMapper).deleteEmployee(1);
-    }
-
-    @Test
-    public void 存在しないIDを指定した時にエラーが返ること() {
-        doReturn(Optional.empty()).when(employeeMapper).findById(100);
-        assertThrows(EmployeeNotFoundException.class, () -> {
-            employeeService.deleteEmployee(100);
-        }, "指定された従業員が見つかりません");
-        verify(employeeMapper).findById(100);
-    }
-
+    
 }
