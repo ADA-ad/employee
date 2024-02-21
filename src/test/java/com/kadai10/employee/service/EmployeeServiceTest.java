@@ -1,6 +1,8 @@
 package com.kadai10.employee.service;
 
+import com.kadai10.employee.controller.request.EmployeeUpdateRequest;
 import com.kadai10.employee.entity.Employee;
+import com.kadai10.employee.exception.EmployeeAlreadyExistsException;
 import com.kadai10.employee.exception.EmployeeNotFoundException;
 import com.kadai10.employee.mapper.EmployeeMapper;
 import org.junit.jupiter.api.Test;
@@ -15,8 +17,10 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTest {
@@ -87,4 +91,24 @@ public class EmployeeServiceTest {
         assertThat(actual).isEqualTo(List.of(new Employee(1, "鈴木 碧", 16, "東京都品川区1-1-1")));
         verify(employeeMapper).findByAddress("東京都品川区1-1-1");
     }
+
+    //CREATE機能のテスト(POST)
+    @Test
+    public void 存在しない従業員情報を新規登録すること() {
+        Employee employee = new Employee("鶴見 良一", 24, "鳥取県鳥取市5-2-3");
+        doNothing().when(employeeMapper).insert(employee);
+        assertThat(employeeService.insert("鶴見 良一", 24, "鳥取県鳥取市5-2-3")).isEqualTo(employee);
+        verify(employeeMapper).insert(employee);
+    }
+
+    @Test
+    public void 既に存在する従業員情報を新規登録すること() {
+        when(employeeMapper.findByNameAndAddress("鈴木 碧", "東京都品川区1-1-1")).thenReturn(List.of(new Employee(1, "鈴木 碧", 16,
+                "東京都品川区1-1-1")));
+        assertThrows(EmployeeAlreadyExistsException.class, () -> {
+            employeeService.insert("鈴木 碧", 16, "東京都品川区1-1-1");
+        });
+    }
+
+    
 }

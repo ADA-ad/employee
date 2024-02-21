@@ -1,8 +1,10 @@
 package com.kadai10.employee.mapper;
 
 import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.spring.api.DBRider;
 import com.kadai10.employee.entity.Employee;
+import com.kadai10.employee.exception.EmployeeAlreadyExistsException;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,4 +84,15 @@ class EmployeeMapperTest {
         List<Employee> employee = employeeMapper.findByAddress("東京都品川区1-1-1");
         assertThat(employee).contains(new Employee(1, "鈴木 碧", 16, "東京都品川区1-1-1"));
     }
+
+    //CREATE機能のDBテスト
+    @Test
+    @DataSet(value = "datasets/employees.yml")
+    @ExpectedDataSet(value = "datasets/insertEmployeesTest.yml", ignoreCols = "id")
+    @Transactional
+    public void 新規の従業員が登録できること() {
+        Employee employee = new Employee("鶴見 良一", 24, "鳥取県鳥取市5-2-3");
+        employeeMapper.insert(employee);
+    }
+
 }
