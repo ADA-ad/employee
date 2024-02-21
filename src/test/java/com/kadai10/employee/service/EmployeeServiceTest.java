@@ -110,5 +110,25 @@ public class EmployeeServiceTest {
         });
     }
 
-    
+
+    //UPDATE機能のテスト(PATCH)
+    @Test
+    public void 存在する従業員の名前と年齢と住所を更新すること() {
+        doReturn(Optional.of(new Employee(2, "花房 清", 25, "岡山県岡山市5-2-3"))).when(employeeMapper).findById(2);
+        Employee actual = employeeService.updateEmployee(2, new EmployeeUpdateRequest("花房 清", 25, "岡山県岡山市5-2-3"));
+        Employee employee = new Employee(2, "花房 清", 25, "岡山県岡山市5-2-3");
+        verify(employeeMapper).findById(2);
+        verify(employeeMapper).updateEmployee(employee);
+    }
+
+    @Test
+    public void 既に存在する従業員情報を重複更新すること() {
+        when(employeeMapper.findByNameAndAddress("佐藤 陽葵", "静岡県伊豆市1-2-3")).thenReturn(List.of(new Employee(2, "佐藤 陽葵", 20, "静岡県伊豆市1-2-3")));
+        assertThrows(EmployeeAlreadyExistsException.class, () -> {
+            employeeService.insert("佐藤 陽葵", 20,"静岡県伊豆市1-2-3");
+        });
+    }
+
+
+
 }

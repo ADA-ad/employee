@@ -257,3 +257,25 @@ curl --location --request DELETE 'http://localhost:8080/employees/delete/70' \
 ### テスト成功
 
 <img width="600" alt="スクリーンショット 2024-02-19 20 20 28" src="https://github.com/ADA-ad/employee/assets/152973671/6c0e1f2e-0f90-4b7b-8ba2-a0d8c069e95e">
+
+### UPDATE処理のServiceテスト
+#### 実装したテスト内容
+
+- 存在する従業員の名前と年齢と住所を更新すること
+- 既に存在する従業員情報を重複更新すること
+
+### 二つ全てのテスト成功
+
+<img width="600" alt="スクリーンショット 2024-02-21 19 27 30" src="https://github.com/ADA-ad/employee/assets/152973671/081e9be2-3023-4583-8a66-0fc08d6bc2dd">
+<img width="600" alt="スクリーンショット 2024-02-21 19 29 10" src="https://github.com/ADA-ad/employee/assets/152973671/4ea84d3a-96f5-49b6-8682-b9f58a0cdaf8">
+
+### UPDATE処理のDBテスト
+#### 実装したテスト内容
+
+- 存在する従業員を更新すること
+- 存在しないIDで従業員を更新処理した場合は更新されないこと
+
+### 二つ全てのテスト成功
+
+<img width="600" alt="スクリーンショット 2024-02-21 19 30 17" src="https://github.com/ADA-ad/employee/assets/152973671/f5b6f312-361f-406f-888d-506d8c646e2a">
+<img width="600" alt="スクリーンショット 2024-02-21 19 30 45" src="https://github.com/ADA-ad/employee/assets/152973671/62657aa3-ad57-4ce8-9372-38182af428aa">
