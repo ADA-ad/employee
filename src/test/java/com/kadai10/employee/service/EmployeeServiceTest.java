@@ -122,7 +122,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void 既に存在する従業員情報を重複更新すること() {
+    public void 既に存在する名前と住所の従業員情報に更新するとエラーが返されること() {
         when(employeeMapper.findByNameAndAddress("佐藤 陽葵", "静岡県伊豆市1-2-3")).thenReturn(List.of(new Employee(2, "佐藤 陽葵", 20, "静岡県伊豆市1-2-3")));
         assertThrows(EmployeeAlreadyExistsException.class, () -> {
             employeeService.insert("佐藤 陽葵", 20,"静岡県伊豆市1-2-3");
