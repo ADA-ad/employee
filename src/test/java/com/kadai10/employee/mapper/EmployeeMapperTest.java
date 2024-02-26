@@ -95,4 +95,24 @@ class EmployeeMapperTest {
         employeeMapper.insert(employee);
     }
 
+    //UPDATE機能のDBテスト
+    @Test
+    @DataSet(value = "datasets/employees.yml")
+    @ExpectedDataSet(value = "datasets/updateEmployeesTest.yml")
+    @Transactional
+    public void 存在する従業員を更新すること() {
+        Employee employee = new Employee(2, "花房 清", 25, "岡山県岡山市5-2-3");
+        employeeMapper.updateEmployee(employee);
+    }
+
+    @Test
+    @DataSet(value = "datasets/employees.yml")
+    @ExpectedDataSet(value = "datasets/employees.yml")
+    @Transactional
+    public void 存在しないIDで従業員を更新処理した場合は更新されないこと() {
+        Employee employee = new Employee(100, "花房 清", 25, "岡山県岡山市5-2-3");
+        employeeMapper.updateEmployee(employee);
+    }
+
+
 }
