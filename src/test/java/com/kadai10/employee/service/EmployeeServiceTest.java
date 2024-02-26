@@ -128,6 +128,7 @@ public class EmployeeServiceTest {
             employeeService.insert("佐藤 陽葵", 20,"静岡県伊豆市1-2-3");
         });
     }
+
     //DELETE機能のテスト
     @Test
     public void 存在するIDを指定して削除できること() {
