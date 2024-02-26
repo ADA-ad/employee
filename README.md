@@ -279,3 +279,25 @@ curl --location --request DELETE 'http://localhost:8080/employees/delete/70' \
 
 <img width="600" alt="スクリーンショット 2024-02-21 19 30 17" src="https://github.com/ADA-ad/employee/assets/152973671/f5b6f312-361f-406f-888d-506d8c646e2a">
 <img width="600" alt="スクリーンショット 2024-02-21 19 30 45" src="https://github.com/ADA-ad/employee/assets/152973671/62657aa3-ad57-4ce8-9372-38182af428aa">
+
+### DELETE処理のServiceテスト
+#### 実装したテスト内容
+
+- 存在するIDを指定して削除できること
+- 存在しないIDを指定した時にエラーが返ること
+
+### 二つ全てのテスト成功
+<img width="600" alt="スクリーンショット 2024-02-26 22 13 13" src="https://github.com/ADA-ad/employee/assets/152973671/e2b7479c-68e3-46ed-a320-5bc1ee3e0e82">
+<img width="600" alt="スクリーンショット 2024-02-26 22 14 33" src="https://github.com/ADA-ad/employee/assets/152973671/17c7989d-9678-4db3-9c5e-83450a19b1a1">
+
+
+### DELETE処理のDBテスト
+#### 実装したテスト内容
+
+- 存在する従業員情報を削除すること
+- 存在しないIDの従業員情報を指定した場合は削除されないこと
+
+### 二つ全てのテスト成功
+
+<img width="600" alt="スクリーンショット 2024-02-26 22 15 07" src="https://github.com/ADA-ad/employee/assets/152973671/f80e0f96-cb96-475f-a3ea-ea3f00e100d1">
+<img width="600" alt="スクリーンショット 2024-02-26 22 15 38" src="https://github.com/ADA-ad/employee/assets/152973671/c482f289-18c4-4704-b3a3-a42ec23d7f68">

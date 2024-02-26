@@ -113,6 +113,20 @@ class EmployeeMapperTest {
         Employee employee = new Employee(100, "花房 清", 25, "岡山県岡山市5-2-3");
         employeeMapper.updateEmployee(employee);
     }
+    //DELETE機能のDBテスト
+    @Test
+    @DataSet(value = "datasets/employees.yml")
+    @ExpectedDataSet(value = "datasets/deleteEmployeesTest.yml")
+    @Transactional
+    public void 存在する従業員情報を削除すること() {
+        employeeMapper.deleteEmployee(1);
+    }
 
-
+    @Test
+    @DataSet(value = "datasets/employees.yml")
+    @ExpectedDataSet(value = "datasets/employees.yml")
+    @Transactional
+    public void 存在しないIDの従業員情報を指定した場合は削除されないこと() {
+        employeeMapper.deleteEmployee(100);
+    }
 }
