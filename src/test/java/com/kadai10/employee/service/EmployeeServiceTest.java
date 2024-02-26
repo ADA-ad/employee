@@ -128,7 +128,23 @@ public class EmployeeServiceTest {
             employeeService.insert("佐藤 陽葵", 20,"静岡県伊豆市1-2-3");
         });
     }
+    //DELETE機能のテスト
+    @Test
+    public void 存在するIDを指定して削除できること() {
+        doReturn(Optional.of(new Employee("鈴木 碧", 16, "東京都品川区1-1-1"))).when(employeeMapper).findById(1);
+        employeeService.deleteEmployee(1);
+        verify(employeeMapper).findById(1);
+        verify(employeeMapper).deleteEmployee(1);
+    }
 
+    @Test
+    public void 存在しないIDを指定した時にエラーが返ること() {
+        doReturn(Optional.empty()).when(employeeMapper).findById(100);
+        assertThrows(EmployeeNotFoundException.class, () -> {
+            employeeService.deleteEmployee(100);
+        }, "指定された従業員が見つかりません");
+        verify(employeeMapper).findById(100);
+    }
 
 
 }
